@@ -1,0 +1,237 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mapa meetupu LS Kraków</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: ścieżka krytyczna u góry, pod nią macierz: kolumny = fazy w czasie, wiersze = kanały pracy. */
+:root {
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --font-body: 'Figtree', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --bg: #F4F6F9; --surface: #FFFFFF; --band: #EBEEF3; --line: #DDE1E8; --line-strong: #C6CCD7;
+  --ink: #1B2230; --ink-2: #4F596C; --ink-3: #7B869A;
+  --before: #7458C9; --during: #B87410; --after: #B8467F;
+  --event: #1F6F8B;
+  --shadow: 0 1px 2px rgba(20,28,45,.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10141A; --surface: #1A1F29; --band: #151A22; --line: #2A3140; --line-strong: #3A4358;
+    --ink: #E9ECF3; --ink-2: #A5AEC0; --ink-3: #7C869A;
+    --before: #A790F2; --during: #E0A140; --after: #E57DB0; --event: #62B6D2;
+    --shadow: 0 1px 2px rgba(0,0,0,.35); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10141A; --surface: #1A1F29; --band: #151A22; --line: #2A3140; --line-strong: #3A4358;
+  --ink: #E9ECF3; --ink-2: #A5AEC0; --ink-3: #7C869A;
+  --before: #A790F2; --during: #E0A140; --after: #E57DB0; --event: #62B6D2;
+  --shadow: 0 1px 2px rgba(0,0,0,.35); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 14px; line-height: 1.45;
+  padding-block: 22px 36px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 22px;
+}
+h1, h2 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(24px, 4.6vw, 32px); line-height: 1.1; letter-spacing: -.01em; }
+h2 { font-size: 18px; line-height: 1.2; }
+.eyebrow { margin: 0 0 3px; font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+.lede { margin: 6px 0 0; color: var(--ink-2); max-width: 68ch; }
+.sec { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.hint { margin: 0; font-size: 12.5px; color: var(--ink-3); }
+
+/* Ścieżka krytyczna */
+.path { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 0; }
+.path li { display: flex; align-items: stretch; min-width: 0; }
+.step {
+  background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--c); border-radius: 8px;
+  padding: 7px 11px 8px; box-shadow: var(--shadow); max-width: 190px;
+}
+.step b { display: block; font-size: 13px; line-height: 1.3; }
+.step span { font-size: 11.5px; color: var(--ink-3); }
+.arrow { align-self: center; padding: 0 5px; color: var(--ink-3); font-size: 16px; line-height: 1; }
+.path li:last-child .arrow { display: none; }
+
+/* Macierz */
+.matrix-wrap { overflow-x: auto; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); }
+.matrix { display: grid; grid-template-columns: 124px repeat(6, minmax(168px, 1fr)); min-width: 1040px; }
+.cell { padding: 9px 8px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cell:nth-child(7n) { border-right: 0; }
+.matrix > .last { border-bottom: 0; }
+.phase { background: var(--band); padding: 11px 10px 10px; gap: 2px; border-top: 4px solid var(--c); }
+.phase b { font-family: var(--font-display); font-size: 14.5px; line-height: 1.2; }
+.phase span { font-size: 11.5px; color: var(--ink-2); }
+.corner { background: var(--band); border-top: 4px solid transparent; justify-content: flex-end; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.lane {
+  background: var(--band); position: sticky; left: 0; z-index: 2; border-right: 1px solid var(--line-strong);
+  justify-content: center; gap: 2px;
+}
+.lane b { font-size: 13px; line-height: 1.25; }
+.lane span { font-size: 11.5px; color: var(--ink-3); line-height: 1.3; }
+.lane::before { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--lc); margin-bottom: 4px; }
+.col-before { background: color-mix(in srgb, var(--before) 4%, var(--surface)); }
+.col-during { background: color-mix(in srgb, var(--during) 8%, var(--surface)); }
+.col-after { background: color-mix(in srgb, var(--after) 4%, var(--surface)); }
+
+.chip {
+  background: var(--surface); border: 1px solid var(--line-strong); border-left: 3px solid var(--lc); border-radius: 6px;
+  padding: 5px 8px; font-size: 12.5px; line-height: 1.3; font-weight: 500; overflow-wrap: anywhere;
+}
+.chip small { display: block; font-weight: 400; color: var(--ink-3); font-size: 11px; margin-top: 1px; }
+.chip.cond { border-style: dashed; border-left-style: solid; background: transparent; }
+.chip.key { border-color: var(--ink-2); border-left-color: var(--lc); }
+.chip.key::after { content: ""; }
+
+/* Przebieg dnia */
+.run { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; counter-reset: r; }
+.run li { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--during); border-radius: 8px; padding: 9px 11px; box-shadow: var(--shadow); counter-increment: r; min-width: 0; }
+.run li::before { content: counter(r); display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--during); color: var(--bg); font-size: 11.5px; font-weight: 700; margin-bottom: 5px; }
+.run b { display: block; font-size: 13.5px; line-height: 1.3; }
+.run span { font-size: 12px; color: var(--ink-2); }
+.parallel { background: var(--band); border: 1px dashed var(--line-strong); border-radius: 10px; padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; font-size: 12.5px; color: var(--ink-2); }
+.parallel b { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ink-2); align-items: center; }
+.legend i { display: inline-block; width: 22px; height: 12px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--line-strong); }
+.legend .dash { border-style: dashed; background: transparent; }
+</style>
+
+<header>
+  <p class="eyebrow">Liberating Structures Kraków</p>
+  <h1>Mapa organizacji meetupu</h1>
+  <p class="lede">Cały proces na jednym ekranie: co dzieje się w kolejnych fazach i w którym kanale. Wszystkie 27 zadań z listy jest na mapie. Kolejność jest propozycją wynikającą z treści zadań, a nie ustalonymi terminami.</p>
+</header>
+
+<section class="sec" aria-labelledby="h-path">
+  <h2 id="h-path">Ścieżka krytyczna</h2>
+  <p class="hint">Kroki, które blokują kolejne. Reszta zadań może iść równolegle.</p>
+  <ol class="path" id="path"></ol>
+</section>
+
+<section class="sec" aria-labelledby="h-map">
+  <h2 id="h-map">Kto i co, w jakiej fazie</h2>
+  <div class="legend">
+    <span><i style="background:var(--surface)"></i>Zadanie</span>
+    <span><i class="dash"></i>Tylko gdy zajdzie warunek</span>
+    <span>Pasek z lewej to kanał pracy</span>
+  </div>
+  <div class="matrix-wrap" tabindex="0" aria-label="Macierz procesu, przewijana poziomo">
+    <div class="matrix" id="matrix"></div>
+  </div>
+  <p class="hint">Na telefonie przesuwaj mapę w bok. Kolumna z nazwami kanałów zostaje po lewej.</p>
+</section>
+
+<section class="sec" aria-labelledby="h-run">
+  <h2 id="h-run">Dzień meetupu po kolei</h2>
+  <ol class="run" id="run"></ol>
+  <div class="parallel" id="parallel"></div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  var PHASES = [
+    { id: 'before', name: 'Decyzje', sub: 'kilka tygodni wcześniej' },
+    { id: 'before', name: 'Przygotowanie', sub: 'treść i wydarzenia' },
+    { id: 'before', name: 'Zapisy i promocja', sub: 'od otwarcia zapisów' },
+    { id: 'before', name: 'Ostatnia prosta', sub: 'kilka dni przed' },
+    { id: 'during', name: 'Dzień meetupu', sub: 'na miejscu w PEGA' },
+    { id: 'after', name: 'Po meetupie', sub: 'dzień po i później' }
+  ];
+
+  var LANES = [
+    { name: 'Temat i treść', sub: 'decyzje, prezentacja', c: 'var(--before)' },
+    { name: 'Miejsce i wydarzenia', sub: 'PEGA, Evenea, LinkedIn', c: 'var(--event)' },
+    { name: 'Posty', sub: 'LinkedIn i social', c: 'var(--after)' },
+    { name: 'Maile', sub: 'MailerLite', c: 'var(--during)' },
+    { name: 'Materiały', sub: 'formularz, kody QR', c: 'var(--ink-2)' },
+    { name: 'Na miejscu', sub: 'prowadzenie wydarzenia', c: 'var(--before)' }
+  ];
+
+  /* [kanał, faza, tekst, opcje]; pełna nazwa zadania w polu full */
+  var T = [
+    [0, 0, 'Zdecydować: temat czy Liberating Structures', '', 'Zdecydować, czy meetup będzie tematyczny, czy skoncentrowany na Liberating Structures.', 'key'],
+    [1, 0, 'Zarezerwować termin w PEGA', '', 'Zarezerwować termin w PEGA.', 'key'],
+    [2, 0, 'Ogłosić temat na wcześniejszym meetupie i przygotować grafikę', '', 'Ogłosić temat na wcześniejszym meetupie i przygotować grafikę zapowiadającą.', ''],
+    [0, 1, 'Przygotować część merytoryczną i prezentację', '', 'Przygotować merytoryczną część meetupu, w tym prezentację.', ''],
+    [1, 1, 'Utworzyć wydarzenie na Evenea', '', 'Utworzyć wydarzenie na Evenea.', 'key'],
+    [1, 2, 'Utworzyć wydarzenie na LinkedIn i zaprosić znajomych', '', 'Utworzyć wydarzenie na LinkedIn i zaprosić znajomych.', ''],
+    [2, 2, 'Post otwierający zapisy', '', 'Opublikować post otwierający zapisy.', 'key'],
+    [2, 2, 'Post przedstawiający prowadzących', '', 'Opublikować post przedstawiający prowadzących.', ''],
+    [2, 2, 'Post o partnerach', '', 'Opublikować post o partnerach.', ''],
+    [2, 2, 'Post o wyprzedaniu biletów', 'gdy skończą się miejsca', 'Opublikować post informujący o wyprzedaniu biletów, gdy wydarzenie osiągnie limit miejsc.', 'cond'],
+    [2, 3, 'Post zapowiadający meetup', '', 'Opublikować post zapowiadający meetup.', ''],
+    [2, 3, 'Post „To już jutro!”', 'to samo zadanie co „To już dziś!”', 'Opublikować posty „To już jutro!” i „To już dziś!”.', ''],
+    [2, 4, 'Post „To już dziś!”', 'rano w dniu wydarzenia', 'Opublikować posty „To już jutro!” i „To już dziś!”.', ''],
+    [2, 4, 'LinkedIn: post z wideo z wydarzenia', '', 'Opublikować na LinkedIn post z materiałem wideo z wydarzenia.', ''],
+    [2, 4, 'Przygotować post na następny dzień', '', 'Przygotować post na następny dzień.', ''],
+    [2, 5, 'Post podsumowujący dzień po wydarzeniu', 'najlepiej przygotowany już na meetupie', 'Opublikować post podsumowujący dzień po wydarzeniu. W miarę możliwości przygotować go już podczas meetupu.', ''],
+    [2, 5, 'Dodatkowy post, np. o użytej strukturze LS', '', 'Opublikować dodatkowy post podsumowujący, na przykład przedstawiający wykorzystaną strukturę Liberating Structures.', ''],
+    [3, 2, 'Mail otwierający zapisy', '', 'Wysłać mail otwierający zapisy za pośrednictwem MailerLite.', 'key'],
+    [3, 3, 'Przypomnienie dla niezapisanych', 'kilka dni przed wydarzeniem', 'Wysłać przypomnienie o wydarzeniu za pośrednictwem MailerLite do subskrybentów, którzy jeszcze się nie zapisali.', ''],
+    [3, 4, 'Mail organizacyjny „To już dziś!”', '', 'Wysłać mail organizacyjny „To już dziś!” za pośrednictwem MailerLite.', ''],
+    [3, 5, 'Mail podsumowujący', '', 'Wysłać mail podsumowujący za pośrednictwem MailerLite.', ''],
+    [4, 3, 'Formularz feedbacku z kodem QR', 'najpierw ustalić z prowadzącymi, o co pytać', 'Przygotować formularz feedbacku z kodem QR. Wcześniej ustalić z prowadzącymi, jakie informacje chcą uzyskać od uczestników.', ''],
+    [4, 3, 'Kod QR do Buy Me a Coffee', 'sprawdzić, czy stary kod działa', 'Przygotować kod QR do Buy Me a Coffee i sprawdzić, czy poprzedni kod nadal działa.', ''],
+    [5, 4, 'Otworzyć meetup i rozpocząć agendę', '', 'Otworzyć meetup, przedstawić cel spotkania i rozpocząć agendę.', ''],
+    [5, 4, 'Przywitać uczestników', '', 'Przywitać uczestników.', ''],
+    [5, 4, 'Opowiedzieć o społeczności LS', '', 'Opowiedzieć uczestnikom o społeczności Liberating Structures.', ''],
+    [5, 4, 'Zamknąć meetup, ogłoszenia organizacyjne', '', 'Zamknąć meetup i przekazać ogłoszenia organizacyjne.', ''],
+    [5, 4, 'Monitorować maile o rezygnacjach', 'i odpowiadać na nie', 'Monitorować maile od uczestników rezygnujących z udziału i odpowiadać na nie.', '']
+  ];
+
+  /* Macierz */
+  var m = document.getElementById('matrix');
+  var html = '<div class="cell corner">Kanał</div>';
+  PHASES.forEach(function (p) {
+    html += '<div class="cell phase" style="--c:var(--' + p.id + ')"><b>' + esc(p.name) + '</b><span>' + esc(p.sub) + '</span></div>';
+  });
+  LANES.forEach(function (l, li) {
+    var last = li === LANES.length - 1 ? ' last' : '';
+    html += '<div class="cell lane' + last + '" style="--lc:' + l.c + '"><b>' + esc(l.name) + '</b><span>' + esc(l.sub) + '</span></div>';
+    PHASES.forEach(function (p, pi) {
+      var items = T.filter(function (t) { return t[0] === li && t[1] === pi; });
+      html += '<div class="cell col-' + p.id + last + '">' + items.map(function (t) {
+        return '<div class="chip ' + t[5] + '" style="--lc:' + l.c + '" title="' + esc(t[4]) + '">' + esc(t[2]) +
+          (t[3] ? '<small>' + esc(t[3]) + '</small>' : '') + '</div>';
+      }).join('') + '</div>';
+    });
+  });
+  m.innerHTML = html;
+
+  /* Ścieżka krytyczna */
+  var P = [
+    ['Decyzja o formacie', 'temat czy LS', 'before'],
+    ['Termin w PEGA', 'rezerwacja', 'before'],
+    ['Wydarzenie na Evenea', 'tu zapisują się ludzie', 'before'],
+    ['Zapisy otwarte', 'post + mail', 'before'],
+    ['Przypomnienie', 'kilka dni przed', 'before'],
+    ['To już jutro / dziś', 'posty i mail', 'during'],
+    ['Meetup', 'agenda i feedback', 'during'],
+    ['Podsumowanie', 'post i mail', 'after']
+  ];
+  document.getElementById('path').innerHTML = P.map(function (s) {
+    return '<li><div class="step" style="--c:var(--' + s[2] + ')"><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div><span class="arrow" aria-hidden="true">→</span></li>';
+  }).join('');
+
+  /* Dzień meetupu */
+  var R = [
+    ['Przywitać uczestników', 'przy wejściu, zanim zacznie się agenda'],
+    ['Otworzyć meetup', 'cel spotkania i start agendy'],
+    ['Opowiedzieć o społeczności LS', 'kim jesteśmy, jak dołączyć'],
+    ['Część merytoryczna', 'prezentacja i struktura LS'],
+    ['Zamknąć meetup', 'ogłoszenia, QR do feedbacku i Buy Me a Coffee']
+  ];
+  document.getElementById('run').innerHTML = R.map(function (r) { return '<li><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></li>'; }).join('');
+  document.getElementById('parallel').innerHTML =
+    '<b>W tle przez cały dzień</b><span>Maile o rezygnacjach</span><span>Wideo na LinkedIn</span><span>Post na następny dzień</span>';
+})();
+</script>
+
+</body></html>
