@@ -6,14 +6,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: ścieżka krytyczna u góry, pod nią macierz: kolumny = fazy w czasie, wiersze = kanały pracy.
-   Każdy kafelek ma wybór osoby (Michał, Sylwia, Olena); stan jest wspólny (db), z awaryjnym zapisem w pamięci strony. */
+   Kafelek: odhaczenie, tekst, edycja, wybór osoby. Stan jest wspólny (db), z awaryjnym zapisem w pamięci strony. */
 :root {
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
   --font-body: 'Figtree', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
   --bg: #F4F6F9; --surface: #FFFFFF; --band: #EBEEF3; --line: #DDE1E8; --line-strong: #C6CCD7;
   --ink: #1B2230; --ink-2: #4F596C; --ink-3: #7B869A;
   --before: #7458C9; --during: #B87410; --after: #B8467F; --event: #1F6F8B;
-  --p-michal: #2A5BD7; --p-sylwia: #1F8A4C; --p-olena: #C2410C; --on-p: #FFFFFF;
+  --p-michal: #2A5BD7; --p-sylwia: #1F8A4C; --p-olena: #C2410C; --on-p: #FFFFFF; --done: #23864F;
   --btn-bg: #1B2230; --btn-fg: #FFFFFF; --focus: #2A5BD7; --danger: #C23B3B;
   --warn-bg: #FFF4DE; --warn-fg: #7A4D07; --overlay: rgba(20,26,38,.45);
   --shadow: 0 1px 2px rgba(20,28,45,.06); --shadow-pop: 0 14px 34px rgba(20,28,45,.20), 0 2px 6px rgba(20,28,45,.10);
@@ -23,7 +23,7 @@
     --bg: #10141A; --surface: #1A1F29; --band: #151A22; --line: #2A3140; --line-strong: #3A4358;
     --ink: #E9ECF3; --ink-2: #A5AEC0; --ink-3: #7C869A;
     --before: #A790F2; --during: #E0A140; --after: #E57DB0; --event: #62B6D2;
-    --p-michal: #7C9DFA; --p-sylwia: #4DBE82; --p-olena: #F0935F; --on-p: #10141A;
+    --p-michal: #7C9DFA; --p-sylwia: #4DBE82; --p-olena: #F0935F; --on-p: #10141A; --done: #4DBE82;
     --btn-bg: #E9ECF3; --btn-fg: #10141A; --focus: #7FA0FF; --danger: #F07575;
     --warn-bg: #3A2D12; --warn-fg: #F2CF8A; --overlay: rgba(0,0,0,.6);
     --shadow: 0 1px 2px rgba(0,0,0,.35); --shadow-pop: 0 14px 34px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
@@ -34,7 +34,7 @@
   --bg: #10141A; --surface: #1A1F29; --band: #151A22; --line: #2A3140; --line-strong: #3A4358;
   --ink: #E9ECF3; --ink-2: #A5AEC0; --ink-3: #7C869A;
   --before: #A790F2; --during: #E0A140; --after: #E57DB0; --event: #62B6D2;
-  --p-michal: #7C9DFA; --p-sylwia: #4DBE82; --p-olena: #F0935F; --on-p: #10141A;
+  --p-michal: #7C9DFA; --p-sylwia: #4DBE82; --p-olena: #F0935F; --on-p: #10141A; --done: #4DBE82;
   --btn-bg: #E9ECF3; --btn-fg: #10141A; --focus: #7FA0FF; --danger: #F07575;
   --warn-bg: #3A2D12; --warn-fg: #F2CF8A; --overlay: rgba(0,0,0,.6);
   --shadow: 0 1px 2px rgba(0,0,0,.35); --shadow-pop: 0 14px 34px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
@@ -58,13 +58,14 @@ h2 { font-size: 18px; line-height: 1.2; }
 .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 20px; }
 .sec { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .hint { margin: 0; font-size: 12.5px; color: var(--ink-3); }
+kbd { font-family: inherit; font-size: 11px; font-weight: 700; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--surface); color: var(--ink-2); }
 
 .btn { border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 8px 13px; font-weight: 600; font-size: 13.5px; line-height: 1.2; }
 .btn:hover { border-color: var(--ink-2); }
 .btn.primary { background: var(--btn-bg); color: var(--btn-fg); border-color: var(--btn-bg); padding: 9px 15px; font-size: 14px; }
 .btn.primary:hover { opacity: .88; }
 .btn.danger { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, var(--line-strong)); }
-.btn.danger.solid { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn.sm { padding: 4px 10px; font-size: 12.5px; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .badge { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink-2); font-size: 12.5px; font-weight: 600; }
 .badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); }
@@ -81,20 +82,28 @@ h2 { font-size: 18px; line-height: 1.2; }
 .arrow { align-self: center; padding: 0 5px; color: var(--ink-3); font-size: 16px; line-height: 1; }
 .path li:last-child .arrow { display: none; }
 
-/* Pasek osób */
-.people { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+/* Postęp i narzędzia */
+.prog { display: flex; align-items: center; gap: 12px; }
+.prog b { font-family: var(--font-display); font-size: 22px; line-height: 1; font-variant-numeric: tabular-nums; }
+.prog span { font-size: 12.5px; color: var(--ink-2); }
+.bar { flex: 1; max-width: 360px; height: 8px; border-radius: 999px; background: var(--band); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--done); border-radius: 999px; transition: width .3s ease; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.search { border: 1px solid var(--line-strong); background: var(--surface); border-radius: 999px; padding: 6px 13px; font-size: 13px; width: 210px; max-width: 100%; }
 .pf { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line-strong); background: var(--surface); border-radius: 999px; padding: 5px 12px 5px 9px; font-size: 13px; font-weight: 600; }
 .pf i { width: 10px; height: 10px; border-radius: 50%; background: var(--pc, var(--ink-3)); }
 .pf b { font-variant-numeric: tabular-nums; color: var(--ink-2); font-weight: 600; }
 .pf[aria-pressed="true"] { background: var(--btn-bg); color: var(--btn-fg); border-color: var(--btn-bg); }
 .pf[aria-pressed="true"] b { color: inherit; opacity: .8; }
+.pf.plain { padding-left: 12px; }
 
 /* Macierz */
 .matrix-wrap { overflow-x: auto; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); }
-.matrix { display: grid; grid-template-columns: 124px repeat(6, minmax(196px, 1fr)); min-width: 1300px; }
+.matrix { display: grid; grid-template-columns: 124px repeat(6, minmax(204px, 1fr)); min-width: 1340px; }
 .cell { padding: 9px 8px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .cell:nth-child(7n) { border-right: 0; }
 .matrix > .last { border-bottom: 0; }
+.cell.over { outline: 2px dashed var(--focus); outline-offset: -3px; }
 .phase { background: var(--band); padding: 11px 10px 10px; gap: 2px; border-top: 4px solid var(--c); }
 .phase b { font-family: var(--font-display); font-size: 14.5px; line-height: 1.2; }
 .phase span { font-size: 11.5px; color: var(--ink-2); }
@@ -107,22 +116,22 @@ h2 { font-size: 18px; line-height: 1.2; }
 .col-during { background: color-mix(in srgb, var(--during) 8%, var(--surface)); }
 .col-after { background: color-mix(in srgb, var(--after) 4%, var(--surface)); }
 
-.chip { background: var(--surface); border: 1px solid var(--line-strong); border-left: 3px solid var(--lc); border-radius: 6px; padding: 6px 8px 7px; display: flex; flex-direction: column; gap: 5px; transition: opacity .15s; }
+.chip { background: var(--surface); border: 1px solid var(--line-strong); border-left: 3px solid var(--lc); border-radius: 6px; padding: 6px 8px 7px; display: flex; flex-direction: column; gap: 5px; transition: opacity .15s; cursor: grab; }
 .chip.cond { border-style: dashed; border-left-style: solid; background: transparent; }
 .chip.key { border-color: var(--ink-2); border-left-color: var(--lc); }
-.chip.dim { opacity: .3; }
-.chip.owned { border-top-color: var(--pc); }
-.chip-top { display: flex; align-items: flex-start; gap: 4px; }
+.chip.dim { opacity: .28; }
+.chip.dragging { opacity: .4; }
+.chip.done .chip-text { color: var(--ink-3); text-decoration: line-through; text-decoration-color: var(--line-strong); }
+.chip.done { background: color-mix(in srgb, var(--surface) 65%, var(--band)); }
+.chip-top { display: flex; align-items: flex-start; gap: 6px; }
+.chk { flex: none; width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--done); cursor: pointer; }
 .chip-text { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.3; font-weight: 500; overflow-wrap: anywhere; }
 .chip-text small { display: block; font-weight: 400; color: var(--ink-3); font-size: 11px; margin-top: 1px; }
+.mark { font-size: 9.5px !important; font-weight: 700 !important; letter-spacing: .08em; text-transform: uppercase; }
 .edit { flex: none; border: 0; background: none; color: var(--ink-3); font-size: 11px; font-weight: 600; padding: 1px 3px; border-radius: 4px; text-decoration: underline; text-underline-offset: 2px; }
 .edit:hover { color: var(--ink); }
-.new-tag { font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
 .who { display: flex; flex-wrap: wrap; gap: 4px; }
-.who button {
-  border: 1px solid var(--line-strong); background: var(--surface); border-radius: 999px; padding: 1px 8px;
-  font-size: 11px; font-weight: 600; line-height: 1.5; color: var(--ink-2);
-}
+.who button { border: 1px solid var(--line-strong); background: var(--surface); border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 600; line-height: 1.5; color: var(--ink-2); }
 .who button:hover { border-color: var(--pc); color: var(--ink); }
 .who button[aria-pressed="true"] { background: var(--pc); border-color: var(--pc); color: var(--on-p); }
 [data-p="michal"] { --pc: var(--p-michal); }
@@ -133,6 +142,12 @@ h2 { font-size: 18px; line-height: 1.2; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ink-2); align-items: center; }
 .legend i { display: inline-block; width: 22px; height: 12px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--line-strong); }
 .legend .dash { border-style: dashed; background: transparent; }
+
+.trash { border: 1px dashed var(--line-strong); border-radius: 10px; padding: 9px 12px; background: var(--band); }
+.trash summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.trash ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.trash li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 13px; }
+.trash li span { flex: 1 1 220px; min-width: 0; overflow-wrap: anywhere; }
 
 /* Przebieg dnia */
 .run { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; counter-reset: r; }
@@ -147,6 +162,7 @@ h2 { font-size: 18px; line-height: 1.2; }
 .overlay { position: fixed; inset: 0; z-index: 80; background: var(--overlay); display: flex; align-items: center; justify-content: center;
   padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
 .modal { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-pop); width: min(460px, 100%); max-height: 100%; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.modal h2 { font-size: 20px; }
 form { display: flex; flex-direction: column; gap: 12px; }
 .field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .field > label { font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
@@ -155,13 +171,17 @@ form { display: flex; flex-direction: column; gap: 12px; }
 .field .err { color: var(--danger); font-size: 12px; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; }
-.btns .left { margin-right: auto; }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); z-index: 90; max-width: min(92vw, 460px); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--btn-bg); color: var(--btn-fg); padding: 9px 15px; border-radius: 10px; font-size: 13.5px; font-weight: 500; box-shadow: var(--shadow-pop); }
+.btns .left { margin-right: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+.note { margin: 0; font-size: 12.5px; color: var(--ink-3); }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); z-index: 90; max-width: min(92vw, 480px); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  background: var(--btn-bg); color: var(--btn-fg); padding: 9px 15px; border-radius: 10px; font-size: 13.5px; font-weight: 500; box-shadow: var(--shadow-pop); display: flex; align-items: center; gap: 14px; }
+.toast button { background: none; border: 0; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
 @media (max-width: 600px) {
-  .field input, .field select { font-size: 16px; }
+  .field input, .field select, .search { font-size: 16px; }
   .row2 { grid-template-columns: 1fr; }
   .actions { width: 100%; }
   .actions .primary { margin-left: auto; }
+  .kbd-hint { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -170,7 +190,7 @@ form { display: flex; flex-direction: column; gap: 12px; }
   <div>
     <p class="eyebrow">Liberating Structures Kraków</p>
     <h1>Mapa organizacji meetupu</h1>
-    <p class="lede">Cały proces na jednym ekranie. Przy każdym kafelku wybierz, kto go bierze: Michał, Sylwia albo Olena. Możesz też dodać własny kafelek. Kolejność w fazach jest propozycją wynikającą z treści zadań.</p>
+    <p class="lede">Cały proces na jednym ekranie. Przy każdym kafelku wybierz, kto go bierze, odhacz gotowe, edytuj albo usuń. Kafelki można też przeciągać do innej fazy lub kanału.</p>
   </div>
   <div class="actions">
     <span class="badge" id="mode" role="status"><i></i><span id="modeText">Łączenie…</span></span>
@@ -186,16 +206,30 @@ form { display: flex; flex-direction: column; gap: 12px; }
 
 <section class="sec" aria-labelledby="h-map">
   <h2 id="h-map">Kto i co, w jakiej fazie</h2>
-  <div class="people" id="people" role="group" aria-label="Pokaż kafelki osoby"></div>
+  <div class="prog">
+    <b id="progNum">0 z 0</b><span>gotowe</span>
+    <div class="bar" id="bar" role="progressbar" aria-label="Postęp ukończenia" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="barFill"></i></div>
+    <span id="progPct">0%</span>
+  </div>
+  <div class="tools">
+    <input class="search" id="q" type="search" placeholder="Szukaj kafelka…" aria-label="Szukaj kafelka" autocomplete="off">
+    <div class="tools" id="people" role="group" aria-label="Pokaż kafelki osoby"></div>
+    <button type="button" class="pf plain" id="hideDone" aria-pressed="false">Ukryj gotowe</button>
+  </div>
   <div class="legend">
     <span><i style="background:var(--surface)"></i>Kafelek</span>
     <span><i class="dash"></i>Tylko gdy zajdzie warunek</span>
     <span>Pasek z lewej to kanał pracy</span>
+    <span class="kbd-hint"><kbd>N</kbd> nowy kafelek, <kbd>/</kbd> szukaj</span>
   </div>
   <div class="matrix-wrap" tabindex="0" aria-label="Macierz procesu, przewijana poziomo">
     <div class="matrix" id="matrix"></div>
   </div>
-  <p class="hint">Na telefonie przesuwaj mapę w bok. Kliknij imię jeszcze raz, żeby zdjąć przypisanie.</p>
+  <p class="hint">Na telefonie przesuwaj mapę w bok. Do przeniesienia kafelka na dotyku użyj przycisku „Edytuj”.</p>
+  <details class="trash" id="trash" hidden>
+    <summary id="trashSum">Usunięte kafelki</summary>
+    <ul id="trashList"></ul>
+  </details>
 </section>
 
 <section class="sec" aria-labelledby="h-run">
@@ -222,21 +256,26 @@ form { display: flex; flex-direction: column; gap: 12px; }
         <div class="field"><label for="m-phase">Faza</label><select id="m-phase"></select></div>
       </div>
       <div class="field"><label for="m-owner">Kto bierze</label><select id="m-owner"></select></div>
+      <p class="note" id="m-note-orig" hidden></p>
       <div class="btns">
-        <button class="btn danger left" id="m-del" type="button" hidden>Usuń kafelek</button>
+        <div class="left">
+          <button class="btn danger" id="m-del" type="button" hidden>Usuń</button>
+          <button class="btn" id="m-reset" type="button" hidden>Przywróć oryginał</button>
+        </div>
         <button class="btn" id="m-cancel" type="button">Anuluj</button>
         <button class="btn primary" id="m-save" type="submit">Dodaj kafelek</button>
       </div>
     </form>
   </div>
 </div>
-<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastMsg"></span><button type="button" id="toastBtn" hidden></button></div>
 
 <script>
 (function () {
   'use strict';
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   var $ = function (id) { return document.getElementById(id); };
+  function has(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
 
   var PEOPLE = [{ id: 'michal', name: 'Michał' }, { id: 'sylwia', name: 'Sylwia' }, { id: 'olena', name: 'Olena' }];
   function pName(id) { for (var i = 0; i < PEOPLE.length; i++) if (PEOPLE[i].id === id) return PEOPLE[i].name; return ''; }
@@ -258,7 +297,7 @@ form { display: flex; flex-direction: column; gap: 12px; }
     { name: 'Na miejscu', sub: 'prowadzenie wydarzenia', c: 'var(--before)' }
   ];
 
-  /* [kanał, faza, tekst, dopisek, pełna nazwa zadania, klasa]. Id kafelka = 'b' + numer pozycji; nie zmieniaj kolejności, bo przypisania są zapisane pod tymi id. */
+  /* [kanał, faza, tekst, dopisek, pełna nazwa zadania, klasa]. Id kafelka = 'b' + numer pozycji; nie zmieniaj kolejności, bo zapisane dane odwołują się do tych id. */
   var T = [
     [0, 0, 'Zdecydować: temat czy Liberating Structures', '', 'Zdecydować, czy meetup będzie tematyczny, czy skoncentrowany na Liberating Structures.', 'key'],
     [1, 0, 'Zarezerwować termin w PEGA', '', 'Zarezerwować termin w PEGA.', 'key'],
@@ -292,75 +331,143 @@ form { display: flex; flex-direction: column; gap: 12px; }
   var BUILT = T.map(function (t, i) {
     return { id: 'b' + (i + 1), lane: t[0], phase: t[1], title: t[2], note: t[3], full: t[4], cls: t[5], custom: false };
   });
+  function builtById(id) { for (var i = 0; i < BUILT.length; i++) if (BUILT[i].id === id) return BUILT[i]; return null; }
 
   /* ---------- Stan i warstwa zapisu ----------
-     assign/<idKafelka> = { owner }; tiles/<id> = własne kafelki.
-     Bez bazy (db = null) stan żyje w pamięci strony. */
-  var db = null;
-  var assign = {};      // id -> owner
-  var customDocs = [];  // [{id, title, note, lane, phase, created}]
-  var shared = false;
-  var focusFilter = 'all';
-  var lastFocus = null;
-  var localSeq = 0;
+     Kolekcje (id kafelka = id dokumentu):
+       assign  { owner }                         kto bierze
+       done    { done: true }                    odhaczone
+       edits   { title?, note?, lane?, phase?, deleted? }   zmiany w kafelkach startowych
+       tiles   { title, note, lane, phase, created }        własne kafelki
+     Bez bazy (db = null) te same mapy żyją w pamięci strony. */
+  var db = null, shared = false, seq = 0;
+  var data = { assign: {}, done: {}, edits: {}, tiles: {} };
+  var focusFilter = 'all', query = '', hideDone = false, lastFocus = null;
 
   var toastTimer = null;
-  function toast(msg) {
-    var el = $('toast'); el.textContent = msg; el.hidden = false;
-    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.hidden = true; }, 3200);
+  function toast(msg, label, fn) {
+    $('toastMsg').textContent = msg;
+    var b = $('toastBtn');
+    b.hidden = !label;
+    b.textContent = label || '';
+    b.onclick = function () { $('toast').hidden = true; if (fn) fn(); };
+    $('toast').hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $('toast').hidden = true; }, label ? 8000 : 3200);
   }
   function failed(e) {
-    var code = e && e.code;
-    toast(code === 'invalid_argument' ? 'Nie możesz zapisywać zmian na tej stronie. Poproś właściciela o dostęp współautora.' : 'Nie udało się zapisać. Spróbuj ponownie.');
+    toast(e && e.code === 'invalid_argument'
+      ? 'Nie możesz zapisywać zmian na tej stronie. Poproś właściciela o dostęp współautora.'
+      : 'Nie udało się zapisać. Spróbuj ponownie.');
+  }
+  var store = {
+    set: function (coll, id, obj) {
+      if (!shared) { data[coll][id] = obj; render(); return Promise.resolve(); }
+      return db.doc(coll + '/' + id).set(obj).catch(failed);
+    },
+    del: function (coll, id) {
+      if (!shared) { delete data[coll][id]; render(); return Promise.resolve(); }
+      return db.doc(coll + '/' + id).delete().catch(failed);
+    },
+    newId: function () { return shared ? db.collection('tiles').doc().id : 'l' + (++seq); }
+  };
+
+  function setOwner(id, owner) { return owner ? store.set('assign', id, { owner: owner }) : store.del('assign', id); }
+  function setDone(id, on) { return on ? store.set('done', id, { done: true }) : store.del('done', id); }
+
+  /* Zapis zmian w kafelku startowym jako różnica względem oryginału */
+  function writeOverride(id, ov) {
+    var keys = Object.keys(ov).filter(function (k) { return ov[k] !== undefined; });
+    if (!keys.length) return store.del('edits', id);
+    var clean = {}; keys.forEach(function (k) { clean[k] = ov[k]; });
+    return store.set('edits', id, clean);
+  }
+  function diffOverride(id, f) {
+    var o = builtById(id), cur = data.edits[id] || {}, ov = {};
+    if (f.title !== o.title) ov.title = f.title;
+    if (f.note !== o.note) ov.note = f.note;
+    if (f.lane !== o.lane) ov.lane = f.lane;
+    if (f.phase !== o.phase) ov.phase = f.phase;
+    if (cur.deleted) ov.deleted = true;
+    return ov;
+  }
+  function saveTile(t, f) {
+    if (t.custom) {
+      var prev = data.tiles[t.id] || {};
+      store.set('tiles', t.id, { title: f.title, note: f.note, lane: f.lane, phase: f.phase, created: prev.created || Date.now() });
+    } else {
+      writeOverride(t.id, diffOverride(t.id, f));
+    }
+    if ((data.assign[t.id] && data.assign[t.id].owner || '') !== f.owner) setOwner(t.id, f.owner);
+  }
+  function addTile(f) {
+    var id = store.newId();
+    store.set('tiles', id, { title: f.title, note: f.note, lane: f.lane, phase: f.phase, created: Date.now() });
+    if (f.owner) setOwner(id, f.owner);
+  }
+  function moveTile(t, lane, phase) {
+    if (t.lane === lane && t.phase === phase) return;
+    if (t.custom) {
+      var d = data.tiles[t.id] || {};
+      store.set('tiles', t.id, { title: d.title, note: d.note || '', lane: lane, phase: phase, created: d.created || Date.now() });
+    } else {
+      writeOverride(t.id, diffOverride(t.id, { title: t.title, note: t.note, lane: lane, phase: phase }));
+    }
+    toast('Przeniesiono: ' + LANES[lane].name + ', ' + PHASES[phase].name);
+  }
+  function deleteTile(t) {
+    if (t.custom) {
+      var snap = { doc: data.tiles[t.id], assign: data.assign[t.id], done: data.done[t.id] };
+      store.del('tiles', t.id); store.del('assign', t.id); store.del('done', t.id);
+      toast('Usunięto kafelek', 'Cofnij', function () {
+        store.set('tiles', t.id, snap.doc);
+        if (snap.assign) store.set('assign', t.id, snap.assign);
+        if (snap.done) store.set('done', t.id, snap.done);
+      });
+    } else {
+      var cur = Object.assign({}, data.edits[t.id] || {}, { deleted: true });
+      store.set('edits', t.id, cur);
+      toast('Usunięto kafelek', 'Cofnij', function () { restoreTile(t.id); });
+    }
+  }
+  function restoreTile(id) {
+    var cur = Object.assign({}, data.edits[id] || {}); delete cur.deleted;
+    writeOverride(id, cur);
   }
 
-  function setOwner(id, owner) {
-    if (!shared) { if (owner) assign[id] = owner; else delete assign[id]; render(); return; }
-    var ref = db.doc('assign/' + id);
-    (owner ? ref.set({ owner: owner }) : ref.delete()).catch(failed);
-  }
-  function addTile(data) {
-    if (!shared) {
-      localSeq += 1;
-      var id = 'l' + localSeq;
-      customDocs.push({ id: id, title: data.title, note: data.note, lane: data.lane, phase: data.phase, created: Date.now() });
-      if (data.owner) assign[id] = data.owner;
-      render(); return;
-    }
-    db.collection('tiles').add({ title: data.title, note: data.note, lane: data.lane, phase: data.phase, created: Date.now() }).then(function (ref) {
-      if (data.owner) return db.doc('assign/' + ref.id).set({ owner: data.owner });
-    }).catch(failed);
-  }
-  function updateTile(id, data) {
-    if (!shared) {
-      customDocs.forEach(function (c) { if (c.id === id) { c.title = data.title; c.note = data.note; c.lane = data.lane; c.phase = data.phase; } });
-      if (data.owner) assign[id] = data.owner; else delete assign[id];
-      render(); return;
-    }
-    db.doc('tiles/' + id).update({ title: data.title, note: data.note, lane: data.lane, phase: data.phase }).then(function () {
-      var ref = db.doc('assign/' + id);
-      return data.owner ? ref.set({ owner: data.owner }) : ref.delete();
-    }).catch(failed);
-  }
-  function deleteTile(id) {
-    if (!shared) { customDocs = customDocs.filter(function (c) { return c.id !== id; }); delete assign[id]; render(); return; }
-    db.doc('tiles/' + id).delete().then(function () { return db.doc('assign/' + id).delete(); }).catch(failed);
-  }
-
-  /* ---------- Render ---------- */
+  /* ---------- Dane do wyświetlenia ---------- */
+  function validPos(l, p, dl, dp) { return (typeof l === 'number' && l >= 0 && l < LANES.length) ? [l, (typeof p === 'number' && p >= 0 && p < PHASES.length) ? p : dp] : [dl, dp]; }
   function allTiles() {
-    var custom = customDocs.slice().sort(function (a, b) { return (a.created || 0) - (b.created || 0) || (a.id < b.id ? -1 : 1); })
-      .map(function (c) { return { id: c.id, lane: c.lane, phase: c.phase, title: c.title, note: c.note || '', full: c.title, cls: '', custom: true }; });
-    return BUILT.concat(custom);
+    var out = BUILT.map(function (b) {
+      var e = data.edits[b.id] || {};
+      var pos = validPos(has(e, 'lane') ? e.lane : b.lane, has(e, 'phase') ? e.phase : b.phase, b.lane, b.phase);
+      var modified = ['title', 'note', 'lane', 'phase'].some(function (k) { return has(e, k); });
+      return { id: b.id, lane: pos[0], phase: pos[1], title: e.title || b.title, note: has(e, 'note') ? String(e.note) : b.note,
+        full: e.title || b.full, cls: b.cls, custom: false, deleted: !!e.deleted, modified: modified };
+    });
+    var custom = Object.keys(data.tiles).map(function (id) {
+      var v = data.tiles[id] || {};
+      var pos = validPos(+v.lane, +v.phase, 0, 0);
+      return { id: id, lane: pos[0], phase: pos[1], title: String(v.title || 'Bez nazwy'), note: String(v.note || ''), full: String(v.title || ''),
+        cls: '', custom: true, deleted: false, modified: false, created: +v.created || 0 };
+    }).sort(function (a, b) { return a.created - b.created || (a.id < b.id ? -1 : 1); });
+    return out.concat(custom);
   }
+  function ownerOf(id) { return (data.assign[id] && data.assign[id].owner) || ''; }
+  function isDone(id) { return !!data.done[id]; }
 
   function chipHtml(t) {
-    var owner = assign[t.id] || '';
-    var dim = focusFilter !== 'all' && (focusFilter === 'none' ? !!owner : owner !== focusFilter);
-    var lane = LANES[t.lane];
-    return '<div class="chip ' + t.cls + (dim ? ' dim' : '') + '" data-id="' + esc(t.id) + '" style="--lc:' + lane.c + '"' + (owner ? ' data-p="' + owner + '"' : '') + ' title="' + esc(t.full) + '">' +
-      '<div class="chip-top"><div class="chip-text">' + esc(t.title) + (t.note ? '<small>' + esc(t.note) + '</small>' : '') + (t.custom ? '<small class="new-tag">własny kafelek</small>' : '') + '</div>' +
-      (t.custom ? '<button type="button" class="edit" data-act="edit" aria-label="Edytuj kafelek: ' + esc(t.title) + '">Edytuj</button>' : '') + '</div>' +
+    var owner = ownerOf(t.id), done = isDone(t.id);
+    var q = query.trim().toLowerCase();
+    var okSearch = !q || (t.title + ' ' + t.note + ' ' + pName(owner)).toLowerCase().indexOf(q) >= 0;
+    var okPerson = focusFilter === 'all' || (focusFilter === 'none' ? !owner : owner === focusFilter);
+    var dim = !(okSearch && okPerson);
+    return '<div class="chip ' + t.cls + (dim ? ' dim' : '') + (done ? ' done' : '') + '" draggable="true" data-id="' + esc(t.id) + '" style="--lc:' + LANES[t.lane].c + '" title="' + esc(t.full) + '">' +
+      '<div class="chip-top">' +
+        '<input class="chk" type="checkbox" data-act="done"' + (done ? ' checked' : '') + ' aria-label="Gotowe: ' + esc(t.title) + '">' +
+        '<div class="chip-text">' + esc(t.title) + (t.note ? '<small>' + esc(t.note) + '</small>' : '') +
+          (t.custom ? '<small class="mark">własny kafelek</small>' : (t.modified ? '<small class="mark">zmieniony</small>' : '')) + '</div>' +
+        '<button type="button" class="edit" data-act="edit" aria-label="Edytuj kafelek: ' + esc(t.title) + '">Edytuj</button></div>' +
       '<div class="who" role="group" aria-label="Kto bierze: ' + esc(t.title) + '">' + PEOPLE.map(function (p) {
         return '<button type="button" data-act="who" data-p="' + p.id + '" aria-pressed="' + (owner === p.id) + '" title="' + (owner === p.id ? 'Zdejmij przypisanie: ' : 'Przypisz: ') + p.name + '">' + p.name + '</button>';
       }).join('') + '</div></div>';
@@ -368,6 +475,7 @@ form { display: flex; flex-direction: column; gap: 12px; }
 
   function render() {
     var tiles = allTiles();
+    var vis = tiles.filter(function (t) { return !t.deleted; });
     var html = '<div class="cell corner">Kanał</div>';
     PHASES.forEach(function (p) {
       html += '<div class="cell phase" style="--c:var(--' + p.id + ')"><b>' + esc(p.name) + '</b><span>' + esc(p.sub) + '</span></div>';
@@ -376,113 +484,164 @@ form { display: flex; flex-direction: column; gap: 12px; }
       var last = li === LANES.length - 1 ? ' last' : '';
       html += '<div class="cell lane' + last + '" style="--lc:' + l.c + '"><b>' + esc(l.name) + '</b><span>' + esc(l.sub) + '</span></div>';
       PHASES.forEach(function (p, pi) {
-        var items = tiles.filter(function (t) { return t.lane === li && t.phase === pi; });
-        html += '<div class="cell col-' + p.id + last + '">' + items.map(chipHtml).join('') +
+        var items = vis.filter(function (t) { return t.lane === li && t.phase === pi && !(hideDone && isDone(t.id)); });
+        html += '<div class="cell col-' + p.id + last + '" data-lane="' + li + '" data-phase="' + pi + '">' + items.map(chipHtml).join('') +
           '<button type="button" class="add-cell" data-act="add" data-lane="' + li + '" data-phase="' + pi + '" aria-label="Dodaj kafelek: ' + esc(l.name) + ', ' + esc(p.name) + '">+ Dodaj</button></div>';
       });
     });
     var m = $('matrix');
-    var key = lastFocus;
     m.innerHTML = html;
-    if (key) {
-      var again = m.querySelector(key);
-      if (again) again.focus();
-    }
-    renderPeople(tiles);
-  }
+    if (lastFocus) { var again = m.querySelector(lastFocus); if (again) again.focus(); }
 
-  function renderPeople(tiles) {
-    var counts = { all: tiles.length, none: 0, michal: 0, sylwia: 0, olena: 0 };
-    tiles.forEach(function (t) { var o = assign[t.id]; if (o && counts[o] !== undefined) counts[o] += 1; else counts.none += 1; });
+    /* postęp */
+    var done = vis.filter(function (t) { return isDone(t.id); }).length;
+    var pct = vis.length ? Math.round(done / vis.length * 100) : 0;
+    $('progNum').textContent = done + ' z ' + vis.length;
+    $('progPct').textContent = pct + '%';
+    $('barFill').style.width = pct + '%';
+    $('bar').setAttribute('aria-valuenow', String(pct));
+
+    /* osoby */
+    var counts = { all: vis.length, none: 0, michal: 0, sylwia: 0, olena: 0 };
+    vis.forEach(function (t) { var o = ownerOf(t.id); if (o && counts[o] !== undefined) counts[o] += 1; else counts.none += 1; });
     var defs = [{ id: 'all', name: 'Wszystkie' }].concat(PEOPLE).concat([{ id: 'none', name: 'Bez osoby' }]);
     $('people').innerHTML = defs.map(function (d) {
       var dot = PEOPLE.some(function (p) { return p.id === d.id; }) ? ' data-p="' + d.id + '"' : '';
       return '<button type="button" class="pf"' + dot + ' data-filter="' + d.id + '" aria-pressed="' + (focusFilter === d.id) + '"><i></i>' + d.name + ' <b>' + counts[d.id] + '</b></button>';
     }).join('');
+    $('hideDone').setAttribute('aria-pressed', String(hideDone));
+
+    /* usunięte kafelki startowe */
+    var gone = tiles.filter(function (t) { return t.deleted; });
+    $('trash').hidden = !gone.length;
+    $('trashSum').textContent = 'Usunięte kafelki (' + gone.length + ')';
+    $('trashList').innerHTML = gone.map(function (t) {
+      return '<li><span>' + esc(t.title) + '</span><button type="button" class="btn sm" data-restore="' + esc(t.id) + '">Przywróć</button></li>';
+    }).join('');
   }
 
+  /* ---------- Zdarzenia ---------- */
   $('people').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-filter]');
-    if (!b) return;
-    focusFilter = b.dataset.filter;
-    lastFocus = null;
-    render();
-    var again = $('people').querySelector('[data-filter="' + focusFilter + '"]');
-    if (again) again.focus();
+    var b = e.target.closest('[data-filter]'); if (!b) return;
+    focusFilter = b.dataset.filter; lastFocus = null; render();
+    var again = $('people').querySelector('[data-filter="' + focusFilter + '"]'); if (again) again.focus();
+  });
+  $('hideDone').addEventListener('click', function () { hideDone = !hideDone; lastFocus = null; render(); });
+  $('q').addEventListener('input', function () { query = this.value; lastFocus = null; render(); });
+  $('trashList').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-restore]'); if (!b) return;
+    restoreTile(b.dataset.restore); toast('Przywrócono kafelek');
   });
 
+  function tileById(id) { return allTiles().filter(function (t) { return t.id === id; })[0] || null; }
+
   $('matrix').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-act]');
-    if (!b) return;
-    var chip = b.closest('.chip');
-    var act = b.dataset.act;
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var chip = b.closest('.chip'), act = b.dataset.act;
     if (act === 'who') {
-      var id = chip.dataset.id, p = b.dataset.p;
+      var id = chip.dataset.id, p = b.dataset.p, next = ownerOf(id) === p ? '' : p;
       lastFocus = '.chip[data-id="' + id + '"] [data-p="' + p + '"]';
-      var next = assign[id] === p ? '' : p;
       setOwner(id, next);
       toast(next ? 'Przypisano: ' + pName(next) : 'Zdjęto przypisanie');
     } else if (act === 'add') {
-      lastFocus = null;
-      openForm({ lane: +b.dataset.lane, phase: +b.dataset.phase });
+      lastFocus = null; openForm({ lane: +b.dataset.lane, phase: +b.dataset.phase });
     } else if (act === 'edit') {
-      lastFocus = null;
-      openForm({ id: chip.dataset.id });
+      lastFocus = null; openForm({ id: chip.dataset.id });
     }
+  });
+  $('matrix').addEventListener('change', function (e) {
+    var b = e.target.closest('[data-act="done"]'); if (!b) return;
+    var id = b.closest('.chip').dataset.id;
+    lastFocus = '.chip[data-id="' + id + '"] .chk';
+    setDone(id, b.checked);
+  });
+
+  /* Przeciąganie kafelków między komórkami */
+  var dragId = null, overCell = null;
+  function clearOver() { if (overCell) overCell.classList.remove('over'); overCell = null; }
+  $('matrix').addEventListener('dragstart', function (e) {
+    var chip = e.target.closest && e.target.closest('.chip'); if (!chip) return;
+    dragId = chip.dataset.id; e.dataTransfer.effectAllowed = 'move';
+    try { e.dataTransfer.setData('text/plain', dragId); } catch (x) { /* ignoruj */ }
+    requestAnimationFrame(function () { chip.classList.add('dragging'); });
+  });
+  $('matrix').addEventListener('dragend', function () {
+    dragId = null; clearOver();
+    Array.prototype.forEach.call(document.querySelectorAll('.chip.dragging'), function (c) { c.classList.remove('dragging'); });
+  });
+  $('matrix').addEventListener('dragover', function (e) {
+    if (!dragId) return;
+    var cell = e.target.closest('.cell[data-lane]'); if (!cell) return;
+    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+    if (overCell !== cell) { clearOver(); cell.classList.add('over'); overCell = cell; }
+  });
+  $('matrix').addEventListener('dragleave', function (e) {
+    var cell = e.target.closest('.cell[data-lane]');
+    if (cell && !cell.contains(e.relatedTarget)) { cell.classList.remove('over'); if (overCell === cell) overCell = null; }
+  });
+  $('matrix').addEventListener('drop', function (e) {
+    if (!dragId) return;
+    var cell = e.target.closest('.cell[data-lane]'); if (!cell) return;
+    e.preventDefault();
+    var t = tileById(dragId); dragId = null; clearOver();
+    if (t) { lastFocus = null; moveTile(t, +cell.dataset.lane, +cell.dataset.phase); }
   });
 
   /* ---------- Okno kafelka ---------- */
-  var editingId = null, delArmed = false, delTimer = null, returnFocus = null;
-  function opts(list, sel, nameKey) {
-    return list.map(function (o, i) { return '<option value="' + i + '"' + (i === sel ? ' selected' : '') + '>' + esc(o.name) + '</option>'; }).join('');
-  }
-  function resetDel() { delArmed = false; clearTimeout(delTimer); var b = $('m-del'); b.textContent = 'Usuń kafelek'; b.classList.remove('solid'); }
+  var editing = null, returnFocus = null;
+  function options(list, sel) { return list.map(function (o, i) { return '<option value="' + i + '"' + (i === sel ? ' selected' : '') + '>' + esc(o.name) + '</option>'; }).join(''); }
   function openForm(o) {
     returnFocus = document.activeElement;
-    var t = null;
-    if (o.id) t = allTiles().filter(function (x) { return x.id === o.id; })[0] || null;
-    editingId = t ? t.id : null;
+    var t = o.id ? tileById(o.id) : null;
+    editing = t;
     $('mTitle').textContent = t ? 'Edytuj kafelek' : 'Nowy kafelek';
     $('m-save').textContent = t ? 'Zapisz zmiany' : 'Dodaj kafelek';
     $('m-del').hidden = !t;
+    $('m-reset').hidden = !(t && t.modified);
+    var orig = t && !t.custom ? builtById(t.id) : null;
+    $('m-note-orig').hidden = !(t && t.modified);
+    if (t && t.modified && orig) $('m-note-orig').textContent = 'Oryginał: ' + orig.title + ', ' + LANES[orig.lane].name + ', ' + PHASES[orig.phase].name + '.';
     $('m-title').value = t ? t.title : '';
     $('m-note').value = t ? t.note : '';
-    var lane = t ? t.lane : (o.lane !== undefined ? o.lane : 0);
-    var phase = t ? t.phase : (o.phase !== undefined ? o.phase : 0);
-    $('m-lane').innerHTML = opts(LANES, lane);
-    $('m-phase').innerHTML = opts(PHASES, phase);
-    var owner = t ? (assign[t.id] || '') : '';
+    $('m-lane').innerHTML = options(LANES, t ? t.lane : (o.lane || 0));
+    $('m-phase').innerHTML = options(PHASES, t ? t.phase : (o.phase || 0));
+    var owner = t ? ownerOf(t.id) : '';
     $('m-owner').innerHTML = '<option value="">Nikt jeszcze</option>' + PEOPLE.map(function (p) { return '<option value="' + p.id + '"' + (owner === p.id ? ' selected' : '') + '>' + p.name + '</option>'; }).join('');
     $('m-err').textContent = '';
-    resetDel();
     $('overlay').hidden = false;
     $('m-title').focus();
   }
   function closeForm() {
-    $('overlay').hidden = true; resetDel();
+    $('overlay').hidden = true;
     if (returnFocus && returnFocus.isConnected && returnFocus.focus) returnFocus.focus();
     returnFocus = null;
   }
   $('addBtn').addEventListener('click', function () { openForm({}); });
   $('m-cancel').addEventListener('click', closeForm);
   $('overlay').addEventListener('mousedown', function (e) { if (e.target === this) closeForm(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('overlay').hidden) closeForm(); });
-  $('m-del').addEventListener('click', function () {
-    if (!delArmed) {
-      delArmed = true; this.textContent = 'Na pewno? Kliknij ponownie'; this.classList.add('solid');
-      delTimer = setTimeout(resetDel, 4000); return;
-    }
-    var id = editingId; closeForm(); deleteTile(id); toast('Usunięto kafelek');
+  $('m-del').addEventListener('click', function () { var t = editing; returnFocus = null; closeForm(); if (t) deleteTile(t); });
+  $('m-reset').addEventListener('click', function () {
+    var t = editing; closeForm();
+    if (t && !t.custom) { store.del('edits', t.id); toast('Przywrócono oryginał'); }
   });
   $('form').addEventListener('submit', function (e) {
     e.preventDefault();
     var title = $('m-title').value.trim();
     if (!title) { $('m-err').textContent = 'Wpisz nazwę zadania.'; $('m-title').focus(); return; }
-    var data = { title: title, note: $('m-note').value.trim(), lane: +$('m-lane').value, phase: +$('m-phase').value, owner: $('m-owner').value };
-    var id = editingId;
+    var f = { title: title, note: $('m-note').value.trim(), lane: +$('m-lane').value, phase: +$('m-phase').value, owner: $('m-owner').value };
+    var t = editing;
     closeForm();
-    if (id) { updateTile(id, data); toast('Zapisano zmiany'); }
-    else { addTile(data); toast('Dodano kafelek: ' + LANES[data.lane].name + ', ' + PHASES[data.phase].name); }
+    if (t) { saveTile(t, f); toast('Zapisano zmiany'); }
+    else { addTile(f); toast('Dodano kafelek: ' + LANES[f.lane].name + ', ' + PHASES[f.phase].name); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !$('overlay').hidden) { closeForm(); return; }
+    if (!$('overlay').hidden || e.ctrlKey || e.metaKey || e.altKey) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'select' || tag === 'textarea') { if (e.key === 'Escape' && e.target === $('q')) { $('q').value = ''; query = ''; render(); } return; }
+    if (e.key === '/') { e.preventDefault(); $('q').focus(); }
+    else if (e.key === 'n' || e.key === 'N') { e.preventDefault(); openForm({}); }
   });
 
   /* ---------- Ścieżka krytyczna i dzień meetupu ---------- */
@@ -504,33 +663,28 @@ form { display: flex; flex-direction: column; gap: 12px; }
   $('parallel').innerHTML = '<b>W tle przez cały dzień</b><span>Maile o rezygnacjach</span><span>Wideo na LinkedIn</span><span>Post na następny dzień</span>';
 
   /* ---------- Start ---------- */
-  function setMode() {
+  function setMode(connecting) {
     var el = $('mode');
     el.classList.toggle('ok', shared); el.classList.toggle('local', !shared);
-    $('modeText').textContent = shared ? 'Wspólny zapis aktywny' : 'Tylko ta sesja, bez zapisu';
-    el.title = shared ? 'Zmiany widzą wszyscy, którzy mają tę stronę otwartą' : 'Zmiany znikną po odświeżeniu strony';
+    $('modeText').textContent = connecting ? 'Łączenie…' : (shared ? 'Wspólny zapis aktywny' : 'Tylko ta sesja, bez zapisu');
+    el.title = shared ? 'Zmiany widzą wszyscy, którzy mają tę stronę otwartą' : (connecting ? '' : 'Zmiany znikną po odświeżeniu strony');
   }
   render();
-  setMode();
-  $('mode').classList.add('local'); $('modeText').textContent = 'Łączenie…';
+  setMode(true);
 
+  function subscribe(coll) {
+    db.collection(coll).onSnapshot(function (snap) {
+      var next = {};
+      snap.docs.forEach(function (d) { next[d.id] = d.data() || {}; });
+      data[coll] = next; render();
+    }, function () { shared = false; setMode(false); });
+  }
   var useP = (window.claude && window.claude.use) ? window.claude.use('db') : Promise.resolve(null);
   useP.then(function (d) {
-    db = d || null;
-    shared = !!db;
-    setMode();
+    db = d || null; shared = !!db; setMode(false);
     if (!db) return;
-    db.collection('assign').onSnapshot(function (snap) {
-      var next = {};
-      snap.docs.forEach(function (doc) { var v = doc.data(); if (v && v.owner) next[doc.id] = v.owner; });
-      assign = next; render();
-    }, function () { shared = false; setMode(); });
-    db.collection('tiles').onSnapshot(function (snap) {
-      customDocs = snap.docs.map(function (doc) { var v = doc.data() || {}; return { id: doc.id, title: String(v.title || 'Bez nazwy'), note: String(v.note || ''), lane: +v.lane || 0, phase: +v.phase || 0, created: +v.created || 0 }; })
-        .filter(function (c) { return c.lane >= 0 && c.lane < LANES.length && c.phase >= 0 && c.phase < PHASES.length; });
-      render();
-    }, function () { shared = false; setMode(); });
-  }, function () { shared = false; setMode(); });
+    ['assign', 'done', 'edits', 'tiles'].forEach(subscribe);
+  }, function () { shared = false; setMode(false); });
 })();
 </script>
 
