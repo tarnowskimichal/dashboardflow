@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liberating Structures – szkolenie online | ahamoments.training</title>
+<meta name="description" content="Zaangażowany zespół, efektywne spotkania. Poznaj Liberating Structures – praktyczne metody, które usprawniają współpracę i wyzwalają kreatywność.">
+<style>
+  :root{
+    --bg:#ffffff; --bg-alt:#f5f7fb; --text:#1d2433; --muted:#5a6479;
+    --primary:#4f46e5; --primary-dark:#3d36b8; --accent:#f59e0b;
+    --card:#ffffff; --border:#e3e7ef; --radius:14px;
+    --max:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.6}
+  img{max-width:100%}
+  a{color:var(--primary)}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  section{padding:64px 0}
+  section.alt{background:var(--bg-alt)}
+  h1,h2,h3{line-height:1.2;margin:0 0 .6em}
+  h1{font-size:clamp(2rem,5vw,3.2rem)}
+  h2{font-size:clamp(1.5rem,3.5vw,2.2rem);text-align:center}
+  h3{font-size:1.15rem}
+  p{margin:0 0 1em}
+  .center{text-align:center}
+  .lead{font-size:1.15rem;color:var(--muted);max-width:640px;margin-left:auto;margin-right:auto}
+
+  header.nav{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);z-index:10}
+  header.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-weight:800;text-decoration:none;color:var(--text)}
+  .logo span{color:var(--primary)}
+  nav a{margin-left:20px;text-decoration:none;color:var(--text);font-weight:500}
+  nav a:hover{color:var(--primary)}
+
+  .btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;font-weight:700;padding:14px 28px;border-radius:999px;border:0;cursor:pointer;font-size:1rem;transition:background .15s,transform .15s}
+  .btn:hover{background:var(--primary-dark);transform:translateY(-1px)}
+  .btn.accent{background:var(--accent);color:#1d2433}
+  .btn.accent:hover{background:#d98a06}
+
+  .hero{padding:80px 0 64px;text-align:center;background:linear-gradient(180deg,#eef0ff 0%,#fff 100%)}
+  .badge{display:inline-block;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 16px;font-weight:600;margin-bottom:24px}
+  .hero p.lead{margin-bottom:28px}
+
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:32px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .card p{color:var(--muted);margin:0}
+
+  .callout{background:#fff8e6;border:1px solid #fde4a8;border-radius:var(--radius);padding:20px 24px;text-align:center;margin-top:32px;font-size:1.1rem}
+
+  .about{display:grid;gap:32px;grid-template-columns:1fr;align-items:center}
+  @media(min-width:800px){.about{grid-template-columns:1.2fr 1fr}}
+  .about ul{padding-left:20px;margin:0 0 1em}
+  .about li{margin-bottom:.5em}
+
+  .quote{font-style:italic}
+  .quote footer{font-style:normal;margin-top:14px;font-size:.92rem;color:var(--muted)}
+  .quote footer strong{color:var(--text);display:block}
+
+  .agenda{display:grid;gap:24px;grid-template-columns:1fr}
+  @media(min-width:800px){.agenda{grid-template-columns:1fr 1fr}}
+  .day h3{color:var(--primary);font-size:1.3rem}
+  .block{border-left:3px solid var(--primary);padding:4px 0 4px 16px;margin-bottom:18px}
+  .block .time{font-weight:700}
+  .block ul{margin:.4em 0 0;padding-left:18px;color:var(--muted)}
+  .block.break{border-color:var(--border);color:var(--muted)}
+
+  .price-box{max-width:520px;margin:32px auto 0;background:#fff;border:2px solid var(--primary);border-radius:var(--radius);padding:32px;text-align:center}
+  .price{font-size:2.6rem;font-weight:800;margin:.2em 0}
+  .price-box ul{list-style:none;padding:0;margin:20px 0 24px;text-align:left}
+  .price-box li{padding:6px 0 6px 28px;position:relative}
+  .price-box li::before{content:"✓";position:absolute;left:0;color:var(--primary);font-weight:800}
+  .terms{font-size:.85rem;color:var(--muted);margin-top:16px}
+
+  .inhouse{margin-top:48px;text-align:center}
+  .inhouse ul{list-style:none;padding:0;max-width:560px;margin:16px auto 24px;text-align:left}
+  .inhouse li{padding:4px 0 4px 24px;position:relative}
+  .inhouse li::before{content:"•";position:absolute;left:6px;color:var(--primary)}
+
+  details{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:12px}
+  summary{cursor:pointer;font-weight:700}
+  details p{margin:.8em 0 0;color:var(--muted)}
+
+  form.ebook{max-width:440px;margin:24px auto 0;display:grid;gap:12px;text-align:left}
+  form.ebook input[type=text],form.ebook input[type=email]{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-size:1rem}
+  form.ebook label.check{font-size:.9rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+
+  footer.site{background:#161b29;color:#c9cfdd;padding:32px 0;text-align:center;font-size:.9rem}
+  footer.site a{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">aha<span>moments</span>.training</a>
+    <nav>
+      <a href="#top">Home</a>
+      <a href="#o-mnie">O mnie</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <!-- TERMIN: zaktualizuj datę poniżej, jeśli ustalisz nowy termin -->
+      <div class="badge">💻 Szkolenie online | 24–25 marca</div>
+      <h1>Zaangażowany zespół,<br>efektywne spotkania</h1>
+      <p class="lead">Poznaj Liberating Structures – praktyczne metody, które usprawniają współpracę i wyzwalają kreatywność.</p>
+      <a class="btn" href="#rejestracja">Zapisuję się na szkolenie</a>
+    </div>
+  </section>
+
+  <!-- PROBLEMY -->
+  <section>
+    <div class="wrap">
+      <h2>Czy to brzmi znajomo?</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Niskie zaangażowanie zespołu</h3>
+          <p>Nie wszyscy aktywnie uczestniczą w spotkaniach – jedni dominują, inni pozostają w cieniu, zwłaszcza w środowisku zdalnym.</p>
+        </div>
+        <div class="card">
+          <h3>Trudności w podejmowaniu decyzji</h3>
+          <p>Dyskusje trwają długo, brakuje klarowności i konkretów, co utrudnia skuteczne ustalenia.</p>
+        </div>
+        <div class="card">
+          <h3>Komunikacja, która wymaga usprawnienia</h3>
+          <p>Nieporozumienia, brak przejrzystości i różne perspektywy mogą prowadzić do niepotrzebnych napięć.</p>
+        </div>
+        <div class="card">
+          <h3>Monotonne i wyczerpujące spotkania</h3>
+          <p>Długie i chaotyczne rozmowy bez wyraźnego celu obniżają produktywność zespołu.</p>
+        </div>
+      </div>
+      <div class="callout">💡 <strong>To można zmienić!</strong> Dzięki Liberating Structures Twoje spotkania staną się dynamiczne, angażujące i skuteczne.</div>
+    </div>
+  </section>
+
+  <!-- KORZYŚCI -->
+  <section class="alt">
+    <div class="wrap">
+      <h2>✅ Co zyskasz dzięki Liberating Structures?</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Efektywne spotkania</h3>
+          <p>Konkretne techniki do natychmiastowego zastosowania – bez długich przygotowań.</p>
+        </div>
+        <div class="card">
+          <h3>Jasne i przemyślane decyzje</h3>
+          <p>Struktury pomagają zespołowi wypracować klarowne i wspólne ustalenia.</p>
+        </div>
+        <div class="card">
+          <h3>Zaangażowanie i zaufanie</h3>
+          <p>Każdy głos ma znaczenie – nawet w dużych grupach.</p>
+        </div>
+        <div class="card">
+          <h3>Nową energię spotkań</h3>
+          <p>Spotkania krótsze, efektywniejsze i bardziej inspirujące.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMPATIA + CTA -->
+  <section>
+    <div class="wrap center">
+      <h2>Rozumiem Twoje wyzwania</h2>
+      <p class="lead">Praca zdalna i hybrydowa wprowadza nowe wyzwania: niskie zaangażowanie, chaotyczne rozmowy i brak efektów spotkań. Wiem, jak to wygląda – też przez to przeszedłem.</p>
+      <p class="lead">Dlatego uczę liderów, jak dzięki prostym metodom prowadzić spotkania, które angażują zespół i przynoszą konkretne rezultaty.</p>
+      <a class="btn" href="#rejestracja">Zapisuję się na szkolenie</a>
+    </div>
+  </section>
+
+  <!-- O MNIE -->
+  <section class="alt" id="o-mnie">
+    <div class="wrap">
+      <h2>👨‍🏫 Kto poprowadzi szkolenie?</h2>
+      <div class="about" style="margin-top:32px">
+        <div>
+          <h3>Michał Tarnowski</h3>
+          <ul>
+            <li>5 lat doświadczenia jako Scrum Master, trener i facylitator.</li>
+            <li>Lider społeczności Liberating Structures Kraków.</li>
+            <li>500+ uczestników moich warsztatów oceniło je na 4.9/5.0.</li>
+            <li>Pracowałem z zespołami od Polski po Portugalię, Danię, Indie, Niemcy, Argentynę i Malezję.</li>
+            <li>Inżynier i ex-Project Manager – łączę techniczne podejście z pracą zespołową.</li>
+          </ul>
+          <!-- TODO: wstaw właściwy link do profilu LinkedIn -->
+          <p><a href="https://www.linkedin.com/" target="_blank" rel="noopener">Sprawdź mój profil na LinkedIn →</a></p>
+        </div>
+        <div class="card center">
+          <p style="font-size:3rem;margin:0">🎯</p>
+          <p><strong>4.9 / 5.0</strong><br>średnia ocena 500+ uczestników</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPINIE -->
+  <section>
+    <div class="wrap">
+      <h2>Opinie uczestników moich warsztatów</h2>
+      <div class="grid">
+        <blockquote class="card quote" style="margin:0">
+          „Michał zainspirował mnie do LS – to był przełom w moich warsztatach międzynarodowych. Zaoszczędziło mi to godziny przygotowań i usprawniło współpracę. Uczestnicy zyskali inkluzywną atmosferę i przestrzeń do swobodnej wymiany opinii."
+          <footer><strong>Halyna Sokol</strong>Senior Global Training and Development Specialist, Motorola Solutions</footer>
+        </blockquote>
+        <blockquote class="card quote" style="margin:0">
+          „Od dwóch lat uczestniczę w warsztatach Michała. Są profesjonalne, angażujące i pozwalają praktycznie poznać struktury. Tematyka jest różnorodna, dzięki czemu wykorzystuję LS zarówno w pracy, jak i na uczelni."
+          <footer><strong>Piotr Hytroś</strong>Development Projects Senior Specialist, TAURON, wykładowca akademicki</footer>
+        </blockquote>
+        <blockquote class="card quote" style="margin:0">
+          „Dzięki warsztatom LS odkryłam konkretne narzędzia do pracy z zespołem i nowe podejście do interakcji. Struktury pomogły mi lepiej generować pomysły i angażować uczestników, co poprawiło moją skuteczność jako lidera."
+          <footer><strong>Anna Jaworska</strong>Scrum Master / Agile Coach, ASTEK</footer>
+        </blockquote>
+        <blockquote class="card quote" style="margin:0">
+          „Jako osoba techniczna byłem dużym sceptykiem Liberating Structures. Dzięki Michałowi odkryłem, że to wartościowe narzędzia, które rozwiązują konkretne problemy w zespole."
+          <footer><strong>Konrad Otrębski</strong>Owner &amp; Tech Lead, P3 Doweks</footer>
+        </blockquote>
+      </div>
+      <p class="center" style="margin-top:32px"><a class="btn" href="#rejestracja">Dołącz do szkolenia!</a></p>
+    </div>
+  </section>
+
+  <!-- AGENDA -->
+  <section class="alt" id="agenda">
+    <div class="wrap">
+      <h2>Agenda</h2>
+      <p class="lead center">Szkolenie odbywa się w godzinach 9:00–17:00 z przerwą na lunch. Każdy z dwóch dni podzielony jest na bloki tematyczne, podczas których poznasz konkretne struktury Liberating Structures i zastosujesz je w praktyce.</p>
+
+      <div class="agenda" style="margin-top:32px">
+        <div class="day">
+          <h3>Dzień 1: Wprowadzenie i podstawowe struktury</h3>
+          <div class="block"><span class="time">09:00 – 09:30</span><br>Zasady, kwestie organizacyjne, zapoznanie z Zoom i Miro</div>
+          <div class="block"><span class="time">09:30 – 10:30 · Budowanie zaangażowania i współpracy</span>
+            <ul>
+              <li><strong>Impromptu Networking</strong> – szybkie rozmowy, które budują relacje i otwierają współpracę.</li>
+              <li><strong>1-2-4-All</strong> – angażowanie wszystkich w generowanie i selekcję pomysłów.</li>
+            </ul>
+          </div>
+          <div class="block"><span class="time">10:45 – 12:30 · Wzmacnianie zespołu i ustalanie priorytetów</span>
+            <ul>
+              <li><strong>Appreciative Interviews</strong> – odkrywanie i wzmacnianie najlepszych praktyk.</li>
+              <li><strong>Min Specs</strong> – określanie minimalnych wymagań dla sukcesu (np. udanego Sprintu).</li>
+              <li><strong>Heard, Seen, Respected</strong> – empatia i zrozumienie w zespole.</li>
+            </ul>
+          </div>
+          <div class="block break"><span class="time">12:30 – 13:30</span> Przerwa obiadowa</div>
+          <div class="block"><span class="time">13:30 – 14:45 · Eliminowanie zbędnych działań w zespole</span>
+            <ul>
+              <li><strong>TRIZ</strong> – odważne spojrzenie na działania, które należy zakończyć, by osiągnąć lepsze rezultaty.</li>
+              <li><strong>15% Solutions</strong> – odkrywanie małych działań możliwych do wdrożenia od razu.</li>
+            </ul>
+          </div>
+          <div class="block"><span class="time">15:00 – 16:15 · Szybkie konsultacje i wyciąganie wniosków</span>
+            <ul>
+              <li><strong>Troika Consulting</strong> – mini-konsultacje zespołowe wspierające szybkie rozwiązywanie wyzwań.</li>
+              <li><strong>What, So What, Now What</strong> – analiza sytuacji, wyciąganie wniosków i definiowanie kolejnych kroków.</li>
+            </ul>
+          </div>
+          <div class="block"><span class="time">16:15 – 17:00</span><br>Podsumowanie dnia</div>
+        </div>
+
+        <div class="day">
+          <h3>Dzień 2: Zaawansowane struktury</h3>
+          <div class="block"><span class="time">09:00 – 10:30 · Identyfikowanie usprawnień w organizacji</span>
+            <ul>
+              <li><strong>Wicked Questions</strong> – formułowanie pytań, które ujawniają napięcia i prowadzą do odkrycia nowych możliwości.</li>
+              <li><strong>Integrated Autonomy</strong> – równoważenie autonomii i współpracy w organizacji w celu skuteczniejszego działania.</li>
+            </ul>
+          </div>
+          <div class="block"><span class="time">10:45 – 12:30 · Planowanie Sprintu / inicjatywy</span>
+            <ul>
+              <li><strong>Social Network Webbing</strong> – wizualizacja połączeń, wspierająca lepszą współpracę i budowanie relacji.</li>
+              <li><strong>Purpose to Practice</strong> – tworzenie spójnej strategii działania, od określenia celu po wdrożenie konkretnych praktyk.</li>
+            </ul>
+          </div>
+          <div class="block break"><span class="time">12:30 – 13:30</span> Przerwa obiadowa</div>
+          <div class="block"><span class="time">13:30 – 14:30 · Zarządzanie portfolio produktów</span>
+            <ul>
+              <li><strong>Ecocycle Planning</strong> – analiza cyklu życia działań i projektów, by lepiej zarządzać zasobami.</li>
+            </ul>
+          </div>
+          <div class="block"><span class="time">14:45 – 16:00 · Kreatywne sposoby rozmów w zespole</span>
+            <ul>
+              <li><strong>Conversation Cafe</strong> – pogłębione rozmowy w grupach, wspierające wymianę perspektyw w spokojnym, refleksyjnym tempie.</li>
+              <li><strong>UX Fishbowl</strong> – struktura pozwalająca obserwować dyskusję w zespole z różnych perspektyw, co prowadzi do lepszego zrozumienia dynamiki grupy.</li>
+            </ul>
+          </div>
+          <div class="block"><span class="time">16:15 – 17:00 · Sesja Q&amp;A i wymiana doświadczeń</span>
+            <ul>
+              <li><strong>Celebrity Interview</strong> – otwarta wymiana pytań i doświadczeń w formie dynamicznego dialogu.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REJESTRACJA -->
+  <section id="rejestracja">
+    <div class="wrap">
+      <h2>Rejestracja na szkolenie</h2>
+      <div class="price-box">
+        <strong>Liberating Structures: szkolenie online</strong>
+        <!-- TERMIN: zaktualizuj datę i cenę -->
+        <p style="margin:.4em 0 0">24–25 marca 2025</p>
+        <div class="price">1 890 zł</div>
+        <ul>
+          <li>2-dniowe szkolenie zdalne</li>
+          <li>Nauka 15+ struktur Liberating Structures</li>
+          <li>Poznasz praktyczne zastosowanie LS w pracy zdalnej</li>
+          <li>Nauczysz się dobierać odpowiednie struktury do celów spotkania</li>
+          <li>Poznane struktury z łatwością wykorzystasz także w spotkaniach na żywo</li>
+          <li>Pracujemy na narzędziach Zoom i Miro</li>
+        </ul>
+        <!-- TODO: podmień na link do swojego formularza zapisów / płatności, jeśli taki masz -->
+        <a class="btn" href="mailto:michal@ahamoments.training?subject=Zapis%20na%20szkolenie%20Liberating%20Structures">Zapisuję się na szkolenie</a>
+        <p class="terms">Zapisując się, akceptujesz Regulamin szkolenia. <a href="#">Zapoznaj się z nim tutaj.</a></p>
+      </div>
+
+      <div class="inhouse">
+        <h3>Szkolenie wewnętrzne dla Twojej organizacji</h3>
+        <ul>
+          <li><strong>Czas trwania:</strong> od 4 godzin do 3 dni – w zależności od potrzeb Twojej organizacji</li>
+          <li><strong>Forma:</strong> online lub onsite</li>
+          <li><strong>Możliwość rozszerzenia o:</strong> wprowadzenie do Scrum i Agile, zasady współpracy, rozwiązywanie konfliktów</li>
+          <li>Skupienie na zwiększeniu samodzielności zespołu</li>
+          <li>Ustalenie procesów i praktyk zespołowych</li>
+        </ul>
+        <a class="btn accent" href="#kontakt">Skontaktuj się ze mną</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWIEDZ SIE WIECEJ -->
+  <section class="alt">
+    <div class="wrap">
+      <h2>Dowiedz się więcej</h2>
+      <div style="max-width:760px;margin:32px auto 0">
+        <details open>
+          <summary>Czym są Liberating Structures? 💡</summary>
+          <p>Liberating Structures to zbiór 33 prostych, ale potężnych technik, które rewolucjonizują sposób pracy zespołów. Dzięki nim spotkania stają się angażujące, efektywne i pełne wartościowych dyskusji. Każdy głos się liczy.</p>
+          <p>Twórcami tych technik są Henri Lipmanowicz i Keith McCandless, którzy stworzyli narzędzia wspierające współpracę, kreatywność i otwartość.</p>
+        </details>
+        <details>
+          <summary>Dla kogo jest to szkolenie? 🌟</summary>
+          <p>Szkolenie skierowane jest do:</p>
+          <p>• Liderów zespołów, którzy chcą budować zaangażowanie.<br>
+             • Scrum Masterów i menedżerów, którzy pragną efektywnie organizować spotkania.<br>
+             • HR-owców i trenerów, którzy poszukują narzędzi wspierających współpracę i kreatywność.</p>
+          <p>Liberating Structures to idealne rozwiązanie dla osób, które chcą wprowadzić samoorganizację, otwartość i nową jakość do spotkań i warsztatów.</p>
+        </details>
+        <details>
+          <summary>Dlaczego warto wybrać ahamoments.training? ❓</summary>
+          <p>W ahamoments.training pomagamy wywoływać „Aha Moments" – chwile olśnienia, które prowadzą do przełomowych wniosków i rozwiązań.</p>
+          <p><strong>Praktyczne podejście:</strong> uczymy technik, które od razu możesz wdrożyć w swojej pracy.<br>
+             <strong>Doświadczenie:</strong> pracowaliśmy z liderami z różnych branż, pomagając im usprawniać współpracę i wyniki zespołów.<br>
+             <strong>Rezultaty:</strong> nasze szkolenia są wysoko oceniane i przekładają się na lepsze spotkania i efektywną współpracę.</p>
+          <p>Dołącz do liderów, którzy już zmienili swoje zespoły dzięki Liberating Structures!</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt">
+    <div class="wrap center">
+      <h2>Masz pytania?</h2>
+      <p class="lead">Skontaktuj się ze mną – chętnie odpowiem i pomogę znaleźć najlepsze rozwiązanie!</p>
+      <p><strong>Email:</strong> <a href="mailto:michal@ahamoments.training">michal@ahamoments.training</a></p>
+      <!-- TODO: wstaw właściwy link do profilu LinkedIn -->
+      <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/" target="_blank" rel="noopener">Michał Tarnowski</a></p>
+    </div>
+  </section>
+
+  <!-- E-BOOK -->
+  <section class="alt">
+    <div class="wrap center">
+      <h2>🎁 Pobierz praktyczny e-book</h2>
+      <p class="lead">3 Liberating Structures do natychmiastowego zastosowania w Twoim zespole 🚀</p>
+      <!--
+        TODO: formularz wymaga zewnętrznej usługi (np. MailerLite, Brevo, ConvertKit, Formspree).
+        Wklej w action adres z tej usługi. Na GitHub Pages nie ma backendu, więc bez tego formularz nic nie wyśle.
+      -->
+      <form class="ebook" action="#" method="post">
+        <input type="text" name="imie" placeholder="Imię" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <label class="check"><input type="checkbox" required> <span>Akceptuję <a href="#">politykę prywatności</a>.</span></label>
+        <button class="btn" type="submit">✅ Pobieram e-book</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>© 2019–2026 ahamoments.training · <a href="#">Polityka prywatności</a></p>
+    <p>Projekt i realizacja: Michał Tarnowski</p>
+  </div>
+</footer>
+
+</body>
+</html>
